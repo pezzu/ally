@@ -45,4 +45,24 @@ describe('Updates command line according to specified mappings', () => {
     expect(ally.convertCommandLine(['foo', 'test'], mappings)).toEqual(['C:\\Path\\To\\FOO\\foo.exe', 'test']);
   });
 
+  it('Respects empty aliases configuration', () => {
+    const mappings = {
+      'executable': 'C:\\Path\\To\\FOO\\foo.exe',
+      'aliases': {}
+    };
+
+    expect(ally.convertCommandLine(['foo', 'test'], mappings)).toEqual(['C:\\Path\\To\\FOO\\foo.exe', 'test']);
+  });
+
+  it('Respects empty command line', () => { 
+    expect(ally.convertCommandLine(['foo'], mappings)).toEqual(['C:\\Path\\To\\FOO\\foo.exe']);
+  });
+
+  it('Allows to have other parameters in the middle of single alias', () => { 
+    expect(ally.convertCommandLine(['foo', 'st', '.', '-q'], mappings)).toEqual(['C:\\Path\\To\\FOO\\foo.exe', 'st', '-uno', '.']);
+  });
+
+  it('Respects parameters order in alias', () => { 
+    expect(ally.convertCommandLine(['bar', '-v', 'add'], mappings)).toEqual(['C:\\Path\\To\\BAR\\bar.exe', '-v', 'add']);
+  });
 });
