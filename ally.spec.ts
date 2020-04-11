@@ -37,7 +37,7 @@ describe('Updates command line according to specified mappings', () => {
   });
 
   it('Replaces params according to mappings', () => { 
-    expect(ally.convertCommandLine(['foo', 'log', '-l'], mappings.foo)).toEqual(['C:\\Path\\To\\FOO\\foo.exe', 'log', '-n']);
+    expect(ally.convertCommandLine(['foo', 'glog', '-l'], mappings.foo)).toEqual(['C:\\Path\\To\\FOO\\foo.exe', 'glog', '-n']);
     expect(ally.convertCommandLine(['bar', 'glog'], mappings.bar)).toEqual(['C:\\Path\\To\\BAR\\bar.exe', 'log']);
   });
 
