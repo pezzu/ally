@@ -5,7 +5,7 @@ import { parse } from 'path';
 const containsSequence = (master: any[], sub: any[]): boolean => sub.every((i => v => i = master.indexOf(v, i) + 1)(0));
 
 const replaceSequence = (array: any[], oldSeq: any[], newSeq: any[]): any[] => {
-  if (containsSequence(array, oldSeq)) {
+  if (containsSequence(array, oldSeq) && (!containsSequence(array, newSeq) || (oldSeq.length > newSeq.length))) {
     const position = array.indexOf(oldSeq[0]);
     array = array.filter(item => !oldSeq.includes(item));
     array.splice(position, 0, ...newSeq);
