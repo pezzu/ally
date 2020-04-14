@@ -1,6 +1,6 @@
 import { spawn } from 'child_process';
 import { parse } from 'path';
-
+import * as fs from 'fs';
 
 const containsSequence = (master: any[], sub: any[]): boolean => sub.every((i => v => i = master.indexOf(v, i) + 1)(0));
 
@@ -20,15 +20,23 @@ const getExeName = ():string => {
   return parse(__filename).name;
 }
 
-const getParams = (command: string) => {
-  return {
-      "executable": "C:\\Path\\To\\FOO\\foo.exe",
-      "aliases": {
-        "log": "log -n",
-        "glog -l": "glog -n",
-        "st -q": "st -uno"
-      }
-  };
+const readSettingsFromConfig = (command: string): Object => {
+  const configFileName = `ally.config.json`;
+  let config;
+  try {
+    config = JSON.parse(fs.readFileSync(configFileName, 'utf8'));
+  }
+  catch (e) {
+    console.error(`Problem reading or parsing ${configFileName}: `, e);
+    process.exit(1);
+  }
+
+  if (!config[command]) {
+    console.error(`No configuration is found for ${command} in ${configFileName}`);
+    process.exit(1)
+  }
+
+  return config[command];
 }
 
 const replaceParam = (params: string[], cmd: string, alias: string): string[] => {
@@ -49,7 +57,7 @@ const runCommand = (argv: string[]): void => {
 
 function main(): void {
   const exe = getExeName();
-  const options = getParams(exe);
+  const options = readSettingsFromConfig(exe);
   
   const cmd = convertCommandLine(process.argv.slice(1), options);
 
