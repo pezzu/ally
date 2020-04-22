@@ -1,8 +1,12 @@
 {
     "compilerOptions" : {
-        "target": "esnext",
+        "target": "es6",
         "module": "commonjs",
-        "sourceMap": true,
-        "watch": true
-    }
+        "outDir": "./dist",
+        "declaration": true,
+        "removeComments": true,
+        "sourceMap": true
+    },
+
+    "exclude": ["node_modules", "dist", "**/*spec.ts"]
 }

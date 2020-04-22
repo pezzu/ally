@@ -1,15 +1,11 @@
-// For a detailed explanation regarding each configuration property, visit:
-// https://jestjs.io/docs/en/configuration.html
-
 module.exports = {
+  preset: 'ts-jest',
 
-  // The test environment that will be used for testing
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'node'],
+
   testEnvironment: "node",
 
-  // The glob patterns Jest uses to detect test files
-  testMatch: [
-    "**/__tests__/**/*.js?(x)",
-    "**/?(*.)+(spec|test).js?(x)"
-  ],
+  rootDir: 'src',
 
+  testRegex: '.spec.ts$'
 };

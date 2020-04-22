@@ -1,4 +1,2 @@
 node_modules
-ally.js
-ally.spec.js
-*.map
+dist
